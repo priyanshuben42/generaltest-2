@@ -1,0 +1,224 @@
+
+    /* Import Google Fonts */
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@300;400;700&display=swap");
+
+    /* General Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Body Styling */
+    body {
+        background-image: url(https://images.unsplash.com/photo-1741091475787-8cf779895451?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        backdrop-filter: blur(5px);
+        font-family: 'Poppins', sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        line-height: 1.6;
+    }
+
+    /* Institute Details */
+    #instituteDetails {
+        transition: border-radius 1s ease;
+        animation: borderanime 3s infinite alternate-reverse;
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+        background-color: #2c353d53;
+        color: white;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        font-family: 'Roboto', sans-serif;
+    }
+
+    #instituteDetails p {
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+    }
+
+    @keyframes borderanime {
+        from {
+            border-radius: 0px;
+        }
+        to {
+            border-radius: 30px;
+        }
+    }
+
+    /* Student Form Styling */
+    #studentFormContainer h2 {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    #studentFormContainer {
+        background-color: #ffffffa1;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 550px;
+        margin: auto;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    #studentForm label {
+        font-family: 'Poppins', sans-serif;
+        text-align: left;
+        display: block;
+        margin: 10px 0 5px;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    #studentForm input {
+        width: 100%;
+        background-color: #ffffff6d;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: 1px solid #8b7676;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Question Styling */
+    .question {
+        margin-bottom: 20px;
+        text-align: left;
+        background-color: #f9f9f940;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .question:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .question p {
+        font-weight: bold;
+        color: #34495e;
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+
+    /* Options Styling */
+    .options label {
+        display: block;
+        border: 1px solid rgb(50, 48, 48);
+        margin: 10px 0;
+        padding: 12px;
+        background-color: #e5e7e873;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        cursor: pointer;
+    }
+
+    .options label:hover {
+        background-color: #bdc3c7;
+        transform: scale(1.02);
+    }
+
+    .options input[type="radio"] {
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    /* Button Styling */
+    button {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        margin-top: 20px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+    }
+
+    button:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+    }
+
+    /* Quiz and Result Containers */
+    #quizContainer, #resultContainer {
+        backdrop-filter: blur(10px);
+        background-color: #ffffff9b;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        width: 100%;
+        text-align: center;
+        animation: fadeIn 0.5s ease-in-out;
+        margin: auto;
+        margin-top: 20px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Restoring Original Result Styling */
+    #resultText {
+        font-size: 24px;
+        font-weight: bold;
+        color: #27ae60;
+        margin-bottom: 20px;
+        animation: bounce 0.5s ease-in-out;
+    }
+
+    #retryButton {
+        background-color: #2ecc71;
+    }
+
+    #retryButton:hover {
+        background-color: #27ae60;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    @media (max-width: 768px) {
+        #quizContainer, #resultContainer, #studentFormContainer {
+            padding: 20px;
+        }
+        h2 {
+            font-size: 24px;
+        }
+    }

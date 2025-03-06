@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>Fundamentals of IT Quiz</title>
+    <script src="script.js" defer></script>
+</head>
+<style>
+    /* Import Google Fonts */
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@300;400;700&display=swap");
+
+    /* General Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Body Styling */
+    body {
+        background-image: url(https://images.unsplash.com/photo-1741091475787-8cf779895451?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        backdrop-filter: blur(5px);
+        font-family: 'Poppins', sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        line-height: 1.6;
+    }
+
+    /* Institute Details */
+    #instituteDetails {
+        transition: border-radius 1s ease;
+        animation: borderanime 3s infinite alternate-reverse;
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+        background-color: #2c353d53;
+        color: white;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        font-family: 'Roboto', sans-serif;
+    }
+
+    #instituteDetails p {
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+    }
+
+    @keyframes borderanime {
+        from {
+            border-radius: 0px;
+        }
+        to {
+            border-radius: 30px;
+        }
+    }
+
+    /* Student Form Styling */
+    #studentFormContainer h2 {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    #studentFormContainer {
+        background-color: #ffffffa1;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 550px;
+        margin: auto;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    #studentForm label {
+        font-family: 'Poppins', sans-serif;
+        text-align: left;
+        display: block;
+        margin: 10px 0 5px;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    #studentForm input {
+        width: 100%;
+        background-color: #ffffff6d;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: 1px solid #8b7676;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Question Styling */
+    .question {
+        margin-bottom: 20px;
+        text-align: left;
+        background-color: #f9f9f940;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .question:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .question p {
+        font-weight: bold;
+        color: #34495e;
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+
+    /* Options Styling */
+    .options label {
+        display: block;
+        border: 1px solid rgb(50, 48, 48);
+        margin: 10px 0;
+        padding: 12px;
+        background-color: #e5e7e873;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        cursor: pointer;
+    }
+
+    .options label:hover {
+        background-color: #bdc3c7;
+        transform: scale(1.02);
+    }
+
+    .options input[type="radio"] {
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    /* Button Styling */
+    button {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        margin-top: 20px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+    }
+
+    button:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+    }
+
+    /* Quiz and Result Containers */
+    #quizContainer, #resultContainer {
+        backdrop-filter: blur(10px);
+        background-color: #ffffff9b;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        width: 100%;
+        text-align: center;
+        animation: fadeIn 0.5s ease-in-out;
+        margin: auto;
+        margin-top: 20px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Restoring Original Result Styling */
+    #resultText {
+        font-size: 24px;
+        font-weight: bold;
+        color: #27ae60;
+        margin-bottom: 20px;
+        animation: bounce 0.5s ease-in-out;
+    }
+
+    #retryButton {
+        background-color: #2ecc71;
+    }
+
+    #retryButton:hover {
+        background-color: #27ae60;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    @media (max-width: 768px) {
+        #quizContainer, #resultContainer, #studentFormContainer {
+            padding: 20px;
+        }
+        h2 {
+            font-size: 24px;
+        }
+    }
+</style>
+<body>
+    <div id="instituteDetails">
+        <h1>Sensorstech Computer Institute</h1>
+        <p><strong>Founder:</strong> Anand Kumar Sharma</p>
+        <p><strong>Teacher:</strong> Priyanshu Ben</p>
+        <p><strong>Address:</strong> Beside Scholar's Valley School, Newada, BLW RD.</p>
+    </div>
+
+    <div id="studentFormContainer">
+        <h2>Student Details</h2>
+        <form id="studentForm">
+            <label for="studentName">Name:</label>
+            <input type="text" id="studentName" required>
+            
+            <label for="studentEmail">Email:</label>
+            <input type="email" id="studentEmail" required>
+            
+            <button type="submit">Start Quiz</button>
+        </form>
+    </div>
+
+    <div id="quizContainer" style="display: none;">
+        <h2>Fundamentals of IT Quiz</h2>
+        <div id="timer">Time Left: 60:00</div>
+        <form id="quizForm">
+                <div class="question">
+    <p>1. What does CPU stand for?</p>
+    <div class="options">
+        <label><input type="radio" name="q1" value="A"> A) Central Processing Unit</label>
+        <label><input type="radio" name="q1" value="B"> B) Computer Processing Unit</label>
+        <label><input type="radio" name="q1" value="C"> C) Central Program Unit</label>
+        <label><input type="radio" name="q1" value="D"> D) Computer Program Unit</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>2. Which of the following is NOT a type of computer memory?</p>
+    <div class="options">
+        <label><input type="radio" name="q2" value="A"> A) RAM</label>
+        <label><input type="radio" name="q2" value="B"> B) ROM</label>
+        <label><input type="radio" name="q2" value="C"> C) CPU</label>
+        <label><input type="radio" name="q2" value="D"> D) Cache</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>3. What is the smallest unit of data in a computer?</p>
+    <div class="options">
+        <label><input type="radio" name="q3" value="A"> A) Byte</label>
+        <label><input type="radio" name="q3" value="B"> B) Bit</label>
+        <label><input type="radio" name="q3" value="C"> C) Kilobyte</label>
+        <label><input type="radio" name="q3" value="D"> D) Megabyte</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>4. Which device is used to input data into a computer?</p>
+    <div class="options">
+        <label><input type="radio" name="q4" value="A"> A) Monitor</label>
+        <label><input type="radio" name="q4" value="B"> B) Printer</label>
+        <label><input type="radio" name="q4" value="C"> C) Keyboard</label>
+        <label><input type="radio" name="q4" value="D"> D) Speaker</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>5. What is the full form of BIOS?</p>
+    <div class="options">
+        <label><input type="radio" name="q5" value="A"> A) Basic Input Output System</label>
+        <label><input type="radio" name="q5" value="B"> B) Binary Input Output System</label>
+        <label><input type="radio" name="q5" value="C"> C) Basic Integrated Operating System</label>
+        <label><input type="radio" name="q5" value="D"> D) Binary Integrated Operating System</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>6. Which operating system is developed by Apple?</p>
+    <div class="options">
+        <label><input type="radio" name="q6" value="A"> A) Windows</label>
+        <label><input type="radio" name="q6" value="B"> B) macOS</label>
+        <label><input type="radio" name="q6" value="C"> C) Linux</label>
+        <label><input type="radio" name="q6" value="D"> D) Android</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>7. What is the core of an operating system called?</p>
+    <div class="options">
+        <label><input type="radio" name="q7" value="A"> A) Shell</label>
+        <label><input type="radio" name="q7" value="B"> B) Kernel</label>
+        <label><input type="radio" name="q7" value="C"> C) Interface</label>
+        <label><input type="radio" name="q7" value="D"> D) Compiler</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>8. Which of the following is an open-source operating system?</p>
+    <div class="options">
+        <label><input type="radio" name="q8" value="A"> A) Windows</label>
+        <label><input type="radio" name="q8" value="B"> B) macOS</label>
+        <label><input type="radio" name="q8" value="C"> C) Linux</label>
+        <label><input type="radio" name="q8" value="D"> D) iOS</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>9. What does GUI stand for?</p>
+    <div class="options">
+        <label><input type="radio" name="q9" value="A"> A) Graphical User Interface</label>
+        <label><input type="radio" name="q9" value="B"> B) General User Interface</label>
+        <label><input type="radio" name="q9" value="C"> C) Graphical Unified Interface</label>
+        <label><input type="radio" name="q9" value="D"> D) General Unified Interface</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>10. Which Windows version introduced the Start Menu?</p>
+    <div class="options">
+        <label><input type="radio" name="q10" value="A"> A) Windows 95</label>
+        <label><input type="radio" name="q10" value="B"> B) Windows XP</label>
+        <label><input type="radio" name="q10" value="C"> C) Windows 7</label>
+        <label><input type="radio" name="q10" value="D"> D) Windows 10</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>11. What does LAN stand for?</p>
+    <div class="options">
+        <label><input type="radio" name="q11" value="A"> A) Local Area Network</label>
+        <label><input type="radio" name="q11" value="B"> B) Large Area Network</label>
+        <label><input type="radio" name="q11" value="C"> C) Logical Area Network</label>
+        <label><input type="radio" name="q11" value="D"> D) Linked Area Network</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>12. Which protocol is used for sending emails?</p>
+    <div class="options">
+        <label><input type="radio" name="q12" value="A"> A) HTTP</label>
+        <label><input type="radio" name="q12" value="B"> B) FTP</label>
+        <label><input type="radio" name="q12" value="C"> C) SMTP</label>
+        <label><input type="radio" name="q12" value="D"> D) TCP</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>13. What is the primary function of a router?</p>
+    <div class="options">
+        <label><input type="radio" name="q13" value="A"> A) To connect multiple networks</label>
+        <label><input type="radio" name="q13" value="B"> B) To store data</label>
+        <label><input type="radio" name="q13" value="C"> C) To process data</label>
+        <label><input type="radio" name="q13" value="D"> D) To display data</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>14. What does IP stand for?</p>
+    <div class="options">
+        <label><input type="radio" name="q14" value="A"> A) Internet Protocol</label>
+        <label><input type="radio" name="q14" value="B"> B) Internal Protocol</label>
+        <label><input type="radio" name="q14" value="C"> C) Internet Port</label>
+        <label><input type="radio" name="q14" value="D"> D) Internal Port</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>15. Which device is used to amplify a network signal?</p>
+    <div class="options">
+        <label><input type="radio" name="q15" value="A"> A) Router</label>
+        <label><input type="radio" name="q15" value="B"> B) Switch</label>
+        <label><input type="radio" name="q15" value="C"> C) Hub</label>
+        <label><input type="radio" name="q15" value="D"> D) Repeater</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>16. Which language is known as the mother of all programming languages?</p>
+    <div class="options">
+        <label><input type="radio" name="q16" value="A"> A) C</label>
+        <label><input type="radio" name="q16" value="B"> B) Java</label>
+        <label><input type="radio" name="q16" value="C"> C) Python</label>
+        <label><input type="radio" name="q16" value="D"> D) Assembly</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>17. What does IDE stand for?</p>
+    <div class="options">
+        <label><input type="radio" name="q17" value="A"> A) Integrated Development Environment</label>
+        <label><input type="radio" name="q17" value="B"> B) Internal Development Environment</label>
+        <label><input type="radio" name="q17" value="C"> C) Integrated Debugging Environment</label>
+        <label><input type="radio" name="q17" value="D"> D) Internal Debugging Environment</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>18. Which of the following is a markup language?</p>
+    <div class="options">
+        <label><input type="radio" name="q18" value="A"> A) Python</label>
+        <label><input type="radio" name="q18" value="B"> B) HTML</label>
+        <label><input type="radio" name="q18" value="C"> C) Java</label>
+        <label><input type="radio" name="q18" value="D"> D) C++</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>19. What is the output of `2 + 3 * 4` in most programming languages?</p>
+    <div class="options">
+        <label><input type="radio" name="q19" value="A"> A) 20</label>
+        <label><input type="radio" name="q19" value="B"> B) 14</label>
+        <label><input type="radio" name="q19" value="C"> C) 10</label>
+        <label><input type="radio" name="q19" value="D"> D) 12</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>20. Which of the following is NOT a programming paradigm?</p>
+    <div class="options">
+        <label><input type="radio" name="q20" value="A"> A) Object-Oriented</label>
+        <label><input type="radio" name="q20" value="B"> B) Functional</label>
+        <label><input type="radio" name="q20" value="C"> C) Procedural</label>
+        <label><input type="radio" name="q20" value="D"> D) Compilation</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>21. Which component is responsible for storing data permanently?</p>
+    <div class="options">
+        <label><input type="radio" name="q21" value="A"> A) RAM</label>
+        <label><input type="radio" name="q21" value="B"> B) CPU</label>
+        <label><input type="radio" name="q21" value="C"> C) Hard Disk</label>
+        <label><input type="radio" name="q21" value="D"> D) Cache</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>22. What is the main function of a GPU?</p>
+    <div class="options">
+        <label><input type="radio" name="q22" value="A"> A) To process graphics</label>
+        <label><input type="radio" name="q22" value="B"> B) To store data</label>
+        <label><input type="radio" name="q22" value="C"> C) To manage memory</label>
+        <label><input type="radio" name="q22" value="D"> D) To execute programs</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>23. Which port is commonly used to connect a printer?</p>
+    <div class="options">
+        <label><input type="radio" name="q23" value="A"> A) USB</label>
+        <label><input type="radio" name="q23" value="B"> B) HDMI</label>
+        <label><input type="radio" name="q23" value="C"> C) VGA</label>
+        <label><input type="radio" name="q23" value="D"> D) Ethernet</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>24. What does SSD stand for?</p>
+    <div class="options">
+        <label><input type="radio" name="q24" value="A"> A) Solid State Drive</label>
+        <label><input type="radio" name="q24" value="B"> B) Super Speed Drive</label>
+        <label><input type="radio" name="q24" value="C"> C) Secure Storage Device</label>
+        <label><input type="radio" name="q24" value="D"> D) System Storage Drive</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>25. Which of the following is an output device?</p>
+    <div class="options">
+        <label><input type="radio" name="q25" value="A"> A) Scanner</label>
+        <label><input type="radio" name="q25" value="B"> B) Mouse</label>
+        <label><input type="radio" name="q25" value="C"> C) Monitor</label>
+        <label><input type="radio" name="q25" value="D"> D) Keyboard</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>26. What is the primary function of an antivirus program?</p>
+    <div class="options">
+        <label><input type="radio" name="q26" value="A"> A) To speed up the computer</label>
+        <label><input type="radio" name="q26" value="B"> B) To detect and remove malware</label>
+        <label><input type="radio" name="q26" value="C"> C) To manage files</label>
+        <label><input type="radio" name="q26" value="D"> D) To create backups</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>27. Which software is used to create spreadsheets?</p>
+    <div class="options">
+        <label><input type="radio" name="q27" value="A"> A) Microsoft Word</label>
+        <label><input type="radio" name="q27" value="B"> B) Microsoft Excel</label>
+        <label><input type="radio" name="q27" value="C"> C) Microsoft PowerPoint</label>
+        <label><input type="radio" name="q27" value="D"> D) Microsoft Access</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>28. What is the purpose of a compiler?</p>
+    <div class="options">
+        <label><input type="radio" name="q28" value="A"> A) To execute code</label>
+        <label><input type="radio" name="q28" value="B"> B) To debug code</label>
+        <label><input type="radio" name="q28" value="C"> C) To convert high-level code to machine code</label>
+        <label><input type="radio" name="q28" value="D"> D) To manage memory</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>29. Which of the following is a database management system?</p>
+    <div class="options">
+        <label><input type="radio" name="q29" value="A"> A) MySQL</label>
+        <label><input type="radio" name="q29" value="B"> B) Photoshop</label>
+        <label><input type="radio" name="q29" value="C"> C) WordPad</label>
+        <label><input type="radio" name="q29" value="D"> D) Notepad</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>30. What is the main purpose of an operating system?</p>
+    <div class="options">
+        <label><input type="radio" name="q30" value="A"> A) To manage hardware and software resources</label>
+        <label><input type="radio" name="q30" value="B"> B) To create documents</label>
+        <label><input type="radio" name="q30" value="C"> C) To browse the internet</label>
+        <label><input type="radio" name="q30" value="D"> D) To play games</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>31. What does URL stand for?</p>
+    <div class="options">
+        <label><input type="radio" name="q31" value="A"> A) Uniform Resource Locator</label>
+        <label><input type="radio" name="q31" value="B"> B) Universal Resource Locator</label>
+        <label><input type="radio" name="q31" value="C"> C) Uniform Resource Link</label>
+        <label><input type="radio" name="q31" value="D"> D) Universal Resource Link</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>32. Which browser is developed by Google?</p>
+    <div class="options">
+        <label><input type="radio" name="q32" value="A"> A) Firefox</label>
+        <label><input type="radio" name="q32" value="B"> B) Safari</label>
+        <label><input type="radio" name="q32" value="C"> C) Chrome</label>
+        <label><input type="radio" name="q32" value="D"> D) Edge</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>33. What does HTML stand for?</p>
+    <div class="options">
+        <label><input type="radio" name="q33" value="A"> A) HyperText Markup Language</label>
+        <label><input type="radio" name="q33" value="B"> B) HighText Machine Language</label>
+        <label><input type="radio" name="q33" value="C"> C) HyperText Machine Language</label>
+        <label><input type="radio" name="q33" value="D"> D) HighText Markup Language</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>34. Which protocol is used for secure communication over the internet?</p>
+    <div class="options">
+        <label><input type="radio" name="q34" value="A"> A) HTTP</label>
+        <label><input type="radio" name="q34" value="B"> B) FTP</label>
+        <label><input type="radio" name="q34" value="C"> C) HTTPS</label>
+        <label><input type="radio" name="q34" value="D"> D) SMTP</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>35. What is the function of a web server?</p>
+    <div class="options">
+        <label><input type="radio" name="q35" value="A"> A) To store emails</label>
+        <label><input type="radio" name="q35" value="B"> B) To host websites</label>
+        <label><input type="radio" name="q35" value="C"> C) To manage databases</label>
+        <label><input type="radio" name="q35" value="D"> D) To process graphics</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>36. What is the purpose of a firewall?</p>
+    <div class="options">
+        <label><input type="radio" name="q36" value="A"> A) To block unauthorized access</label>
+        <label><input type="radio" name="q36" value="B"> B) To speed up the internet</label>
+        <label><input type="radio" name="q36" value="C"> C) To store data</label>
+        <label><input type="radio" name="q36" value="D"> D) To manage files</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>37. Which of the following is a type of malware?</p>
+    <div class="options">
+        <label><input type="radio" name="q37" value="A"> A) Firewall</label>
+        <label><input type="radio" name="q37" value="B"> B) Antivirus</label>
+        <label><input type="radio" name="q37" value="C"> C) Trojan</label>
+        <label><input type="radio" name="q37" value="D"> D) Compiler</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>38. What is two-factor authentication used for?</p>
+    <div class="options">
+        <label><input type="radio" name="q38" value="A"> A) To increase security</label>
+        <label><input type="radio" name="q38" value="B"> B) To speed up login</label>
+        <label><input type="radio" name="q38" value="C"> C) To store passwords</label>
+        <label><input type="radio" name="q38" value="D"> D) To manage files</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>39. Which of the following is a strong password?</p>
+    <div class="options">
+        <label><input type="radio" name="q39" value="A"> A) 123456</label>
+        <label><input type="radio" name="q39" value="B"> B) Password</label>
+        <label><input type="radio" name="q39" value="C"> C) P@ssw0rd!</label>
+        <label><input type="radio" name="q39" value="D"> D) admin</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>40. What does VPN stand for?</p>
+    <div class="options">
+        <label><input type="radio" name="q40" value="A"> A) Virtual Private Network</label>
+        <label><input type="radio" name="q40" value="B"> B) Virtual Public Network</label>
+        <label><input type="radio" name="q40" value="C"> C) Verified Private Network</label>
+        <label><input type="radio" name="q40" value="D"> D) Verified Public Network</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>41. What is the binary equivalent of the decimal number 10?</p>
+    <div class="options">
+        <label><input type="radio" name="q41" value="A"> A) 1010</label>
+        <label><input type="radio" name="q41" value="B"> B) 1001</label>
+        <label><input type="radio" name="q41" value="C"> C) 1100</label>
+        <label><input type="radio" name="q41" value="D"> D) 1111</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>42. Which company developed the first microprocessor?</p>
+    <div class="options">
+        <label><input type="radio" name="q42" value="A"> A) Intel</label>
+        <label><input type="radio" name="q42" value="B"> B) AMD</label>
+        <label><input type="radio" name="q42" value="C"> C) IBM</label>
+        <label><input type="radio" name="q42" value="D"> D) Microsoft</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>43. What is the full form of PDF?</p>
+    <div class="options">
+        <label><input type="radio" name="q43" value="A"> A) Portable Document Format</label>
+        <label><input type="radio" name="q43" value="B"> B) Printable Document Format</label>
+        <label><input type="radio" name="q43" value="C"> C) Portable Data Format</label>
+        <label><input type="radio" name="q43" value="D"> D) Printable Data Format</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>44. Which of the following is a cloud storage service?</p>
+    <div class="options">
+        <label><input type="radio" name="q44" value="A"> A) Google Drive</label>
+        <label><input type="radio" name="q44" value="B"> B) Microsoft Word</label>
+        <label><input type="radio" name="q44" value="C"> C) Adobe Photoshop</label>
+        <label><input type="radio" name="q44" value="D"> D) Windows Explorer</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>45. What is the purpose of a cache memory?</p>
+    <div class="options">
+        <label><input type="radio" name="q45" value="A"> A) To store data permanently</label>
+        <label><input type="radio" name="q45" value="B"> B) To speed up data access</label>
+        <label><input type="radio" name="q45" value="C"> C) To manage files</label>
+        <label><input type="radio" name="q45" value="D"> D) To process graphics</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>46. Which of the following is a programming language?</p>
+    <div class="options">
+        <label><input type="radio" name="q46" value="A"> A) HTML</label>
+        <label><input type="radio" name="q46" value="B"> B) CSS</label>
+        <label><input type="radio" name="q46" value="C"> C) JavaScript</label>
+        <label><input type="radio" name="q46" value="D"> D) XML</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>47. What is the full form of USB?</p>
+    <div class="options">
+        <label><input type="radio" name="q47" value="A"> A) Universal Serial Bus</label>
+        <label><input type="radio" name="q47" value="B"> B) Universal System Bus</label>
+        <label><input type="radio" name="q47" value="C"> C) Unified Serial Bus</label>
+        <label><input type="radio" name="q47" value="D"> D) Unified System Bus</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>48. Which of the following is NOT a type of computer virus?</p>
+    <div class="options">
+        <label><input type="radio" name="q48" value="A"> A) Worm</label>
+        <label><input type="radio" name="q48" value="B"> B) Trojan</label>
+        <label><input type="radio" name="q48" value="C"> C) Spyware</label>
+        <label><input type="radio" name="q48" value="D"> D) Firewall</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>49. What is the primary function of a modem?</p>
+    <div class="options">
+        <label><input type="radio" name="q49" value="A"> A) To convert digital signals to analog signals</label>
+        <label><input type="radio" name="q49" value="B"> B) To process graphics</label>
+        <label><input type="radio" name="q49" value="C"> C) To store data</label>
+        <label><input type="radio" name="q49" value="D"> D) To manage memory</label>
+    </div>
+</div>
+
+<div class="question">
+    <p>50. Which of the following is a search engine?</p>
+    <div class="options">
+        <label><input type="radio" name="q50" value="A"> A) Google</label>
+        <label><input type="radio" name="q50" value="B"> B) Facebook</label>
+        <label><input type="radio" name="q50" value="C"> C) Instagram</label>
+        <label><input type="radio" name="q50" value="D"> D) WhatsApp</label>
+    </div>
+</div>
+            <button type="button" id="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="resultContainer" style="display: none;">
+        <h2>Quiz Results</h2>
+        <p id="studentDetails"></p>
+        <p id="resultText"></p>
+        <button id="retryButton">Retry Quiz</button>
+    </div>
+
+</body>
+</html>
